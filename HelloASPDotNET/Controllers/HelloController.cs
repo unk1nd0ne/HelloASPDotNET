@@ -6,21 +6,37 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HelloASPDotNET.Controllers
 {
+    [Route("/helloworld")]
     public class HelloController : Controller
     {
-        // GET: /hello/
+        // GET: /helloworld/
         [HttpGet]
-        [Route("/helloworld/")]
         public IActionResult Index()
         {
-            string html = "<h1>" + "Hello World!" + "<h1>";
+            //string html = "<h1>" + "Hello World!" + "<h1>";
+            string html = "<form method='post' action='/helloworld'>" +
+                "<input type='text' name='name' />" +
+                "<select name='lang'>" +
+                    "<option value='Hello'> English </option>" +
+                    "<option value='Bounjour'> French </option>" +
+                    "<option value='Hallo'> German </option>" +
+                    "<option value='Hola'> Spanish </option>" +
+                    "<option value='Hallo'> Norwegian </option>" +
+                "</select>" +
+                "<input type='submit' value='Greet Me!' />" +
+                "</form>";
             return Content(html, "text/html");
         }
 
-        // GET: /hello/welcome
-        public IActionResult Welcome(string name = "World")
+        // POST: /helloworld/
+        //[HttpGet("welcome/{name?}")]
+        //[HttpPost("welcome")]
+        [HttpPost]
+        public IActionResult Welcome(string name = "World", string lang = "Hello")
         {
-            return Content("<h1>Welcome to my app, " + name + "!</h1>", "text/html");
+            return Content($"<h1>{lang} {name}.</h1>", "text/html");
+
+            //return Content("<h1>Welcome to my app, " + name + "!</h1>", "text/html");
         }
     }
 }
